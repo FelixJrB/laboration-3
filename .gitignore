@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.env
+CONTEXT_LAB2.md
+.eslintcache

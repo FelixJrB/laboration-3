@@ -13,7 +13,9 @@
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
     "format": "prettier --write ./src",
-    "format:check": "prettier ./src --check"
+    "format:check": "prettier ./src --check",
+    "docker:prod": "docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --build",
+    "docker:down": "docker compose -f docker-compose.yaml -f docker-compose.prod.yaml down"
   },
   "prettier": "@lnu/prettier-config",
   "keywords": [],

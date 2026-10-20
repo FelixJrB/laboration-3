@@ -1,0 +1,6 @@
+name: laboration-3
+
+services:
+  caddy:
+    environment:
+      - SITE_ADDRESS=cu2023.camp.lnu.se

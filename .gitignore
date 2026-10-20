@@ -3,3 +3,4 @@ dist/
 .env
 CONTEXT_LAB2.md
 .eslintcache
+certs/

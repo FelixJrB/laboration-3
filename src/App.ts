@@ -12,6 +12,7 @@ export class App {
    *
    */
   constructor() {
+    this.express.set('trust proxy', 1);
     this.express.use(express.static('public'));
 
     const dashboard = new Dashboard();

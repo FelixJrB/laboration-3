@@ -1,5 +1,7 @@
 import express from 'express';
-
+import { Dashboard } from './view/Dashboard.js';
+import { DashboardController } from './controller/DashBoardController.js';
+import { DashboardRouter } from './routes/router.js';
 /**
  *
  */
@@ -11,6 +13,11 @@ export class App {
    */
   constructor() {
     this.express.use(express.static('public'));
+
+    const dashboard = new Dashboard();
+    const controller = new DashboardController(dashboard);
+    const router = new DashboardRouter(controller);
+    this.express.use('/', router.router);
   }
 
   /**

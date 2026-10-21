@@ -4,17 +4,19 @@ import { VisitorRegistry } from '../model/VisitorRegistry.js';
 import { VisitorHive } from '../model/VisitorHive.js';
 
 /**
- *
+ * Handles requests to the dashboard.
  */
 export class DashboardController {
   private readonly dashboard: Dashboard;
   private readonly registry: VisitorRegistry;
   private readonly hive: VisitorHive;
+
   /**
+   * Receives its dependencies from App instead of creating them.
    *
-   * @param dashboard
-   * @param registry
-   * @param hive
+   * @param dashboard - Renders the page.
+   * @param registry - Keeps track of the visitors.
+   * @param hive - Lays out the hexagons.
    */
   constructor(dashboard: Dashboard, registry: VisitorRegistry, hive: VisitorHive) {
     this.dashboard = dashboard;
@@ -23,9 +25,11 @@ export class DashboardController {
   }
 
   /**
+   * Registers the request as a visit and responds with the dashboard.
+   * Opening the dashboard therefore counts as a visit.
    *
-   * @param req
-   * @param res
+   * @param req - The incoming request, which holds the visitor's address and user agent.
+   * @param res - Used to send the rendered page.
    */
   showDashboard(req: Request, res: Response): void {
     this.registry.registerVisit({

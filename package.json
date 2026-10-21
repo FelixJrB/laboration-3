@@ -20,7 +20,7 @@
   "prettier": "@lnu/prettier-config",
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "express": "^5.3.0",

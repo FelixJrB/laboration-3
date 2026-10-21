@@ -9,11 +9,14 @@ type DashboardData = {
 };
 
 /**
- *
+ * Renders the dashboard page. Every number and hexagon comes from the controller.
  */
 export class Dashboard {
   /**
-   * @param data
+   * Renders the complete HTML page.
+   *
+   * @param data - The visitors, the device counts and the hexagons to draw them in.
+   * @returns The page as an HTML string.
    */
   render(data: DashboardData): string {
     return `<!doctype html>
@@ -44,6 +47,16 @@ export class Dashboard {
 
   // TODO: Show visitors on a Leaflet map once LocationService returns coordinates.
   // TODO: Show a table of all stored visitors once visits are saved to a database.
+
+  /**
+   * Draws the four statistics, one in each hexagon.
+   *
+   * @param data - The visitors, the device counts and the statistics hexagons.
+   * @param data.visitors - Every unique visitor.
+   * @param data.deviceCounter - The number of visitors per device type.
+   * @param data.statHexagons - One hexagon per statistic.
+   * @returns An SVG element.
+   */
   private renderStats({ visitors, deviceCounter, statHexagons }: DashboardData): string {
     const stats = [
       { label: 'Total visitors', value: visitors.size },
@@ -68,6 +81,14 @@ export class Dashboard {
     return this.toSvg(statHexagons, shapes);
   }
 
+  /**
+   * Draws one hexagon per visitor, coloured by device type through its CSS class.
+   *
+   * @param data - The visitors and one hexagon per visitor.
+   * @param data.visitors - Every unique visitor.
+   * @param data.visitorHexagons - One hexagon per visitor, in the same order.
+   * @returns An SVG element.
+   */
   private renderVisitors({ visitors, visitorHexagons }: DashboardData): string {
     const visitorList = [...visitors.values()];
     let shapes = '';
@@ -90,10 +111,23 @@ export class Dashboard {
     return this.toSvg(visitorHexagons, shapes);
   }
 
+  /**
+   * Formats the corners of a hexagon for the `points` attribute of an SVG polygon.
+   *
+   * @param hexagon - The hexagon to format.
+   * @returns The corners as "x,y x,y ...".
+   */
   private toPoints(hexagon: Hexagon): string {
     return hexagon.points.map((point) => `${point.x},${point.y}`).join(' ');
   }
 
+  /**
+   * Wraps the shapes in an SVG element sized to fit every hexagon, so nothing is cut off.
+   *
+   * @param hexagons - The hexagons that decide the size.
+   * @param shapes - The SVG markup to wrap.
+   * @returns An SVG element, or an empty string when there are no hexagons.
+   */
   private toSvg(hexagons: Hexagon[], shapes: string): string {
     const points = hexagons.flatMap((hexagon) => hexagon.points);
     if (points.length === 0) return '';

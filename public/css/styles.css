@@ -100,7 +100,8 @@ h2 {
   font-weight: 600;
 }
 
-.visitor-os {
+.visitor-os,
+.visitor-location {
   font-size: 13px;
 }
 

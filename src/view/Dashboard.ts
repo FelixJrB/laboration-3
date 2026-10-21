@@ -17,7 +17,7 @@ export class Dashboard {
    */
   render(data: DashboardData): string {
     return `<!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,15 +27,23 @@ export class Dashboard {
 <body>
   <main>
     <h1>Visitor Dashboard</h1>
-    <p class="sub">Besök registreras med visitor-module</p>
+    <p class="sub">Visitors are registered with the visitor-module</p>
+    <h2>Visitor Statistics</h2>
     ${this.renderStats(data)}
-    <h2>Alla besökare</h2>
+    <h2>Visitors</h2>
+    <p class="sub">Every unique visitor since the server started</p>
     ${this.renderVisitors(data)}
+    <h2>Map</h2>
+    <p class="sub">Planned</p>
+    <h2>All Visitors</h2>
+    <p class="sub">Planned</p>
   </main>
 </body>
 </html>`;
   }
 
+  // TODO: Show visitors on a Leaflet map once LocationService returns coordinates.
+  // TODO: Show a table of all stored visitors once visits are saved to a database.
   private renderStats({ visitors, deviceCounter, statHexagons }: DashboardData): string {
     const stats = [
       { label: 'Total visitors', value: visitors.size },
@@ -68,12 +76,14 @@ export class Dashboard {
       const visitor = visitorList[index];
       if (!visitor) return;
 
+      // location unknown until ive implemented api
       const { x, y } = hexagon.center;
       shapes += `<g class="visitor visitor-${visitor.deviceType.toLowerCase()}">
         <polygon points="${this.toPoints(hexagon)}"></polygon>
-        <text class="visitor-id" x="${x}" y="${y - 22}">#${visitor.uniqueId}</text>
-        <text class="visitor-device" x="${x}" y="${y + 2}">${visitor.deviceType}</text>
-        <text class="visitor-os" x="${x}" y="${y + 24}">${visitor.operatingSystem}</text>
+        <text class="visitor-id" x="${x}" y="${y - 32}">#${visitor.uniqueId}</text>
+        <text class="visitor-device" x="${x}" y="${y - 10}">${visitor.deviceType}</text>
+        <text class="visitor-os" x="${x}" y="${y + 12}">${visitor.operatingSystem}</text>
+        <text class="visitor-location" x="${x}" y="${y + 32}">${visitor.location}</text> 
       </g>`;
     });
 
